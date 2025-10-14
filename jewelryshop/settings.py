@@ -23,6 +23,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,6 +33,13 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'store',
 ]
+UNFOLD = {
+    "SITE_TITLE": "My Cool Admin",
+    "SITE_HEADER": "My Dashboard",
+    "SHOW_HISTORY": True,
+    "SHOW_COLLECTSTATIC_LINK": False,
+    "THEME": "light",  # options: 'light', 'dark', or 'auto'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
