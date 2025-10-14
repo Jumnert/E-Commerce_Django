@@ -23,7 +23,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'unfold',
+    # 'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +38,7 @@ UNFOLD = {
     "SITE_HEADER": "My Dashboard",
     "SHOW_HISTORY": True,
     "SHOW_COLLECTSTATIC_LINK": False,
-    "THEME": "light",  # options: 'light', 'dark', or 'auto'
+    "THEME": "dark",  # options: 'light', 'dark', or 'auto'
 }
 
 MIDDLEWARE = [
