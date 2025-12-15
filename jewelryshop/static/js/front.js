@@ -69,9 +69,12 @@ $(function () {
 /* ===============================================================
      COUNTRY SELECT BOX FILLING
   =============================================================== */
-$.getJSON('js/countries.json', function (data) {
+
+$.getJSON('/static/js/countries.json', function (data) {
     $.each(data, function (key, value) {
-        var selectOption = "<option value='" + value.name + "' data-dial-code='" + value.dial_code + "'>" + value.name + "</option>";
+        var selectOption =
+            "<option value='" + value.name + "' data-dial-code='" +
+            value.dial_code + "'>" + value.name + "</option>";
         $("select.country").append(selectOption);
     });
-})
+});
