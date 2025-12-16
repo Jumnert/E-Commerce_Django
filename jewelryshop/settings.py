@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 INSTALLED_APPS = [
+    "unfold",  
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -21,7 +22,11 @@ INSTALLED_APPS = [
     'store',
     'django_extensions',
 ]
-
+UNFOLD = {
+    "SITE_TITLE": "E-Commerce Admin",
+    "SITE_HEADER": "E-Commerce Dashboard",
+    "THEME": "dark",   # light / dark / auto
+}
 
 
 MIDDLEWARE = [

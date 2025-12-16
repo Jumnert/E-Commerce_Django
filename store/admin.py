@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from .models import Address, Category, Product, Cart, Order
 
 # Register your models here.
