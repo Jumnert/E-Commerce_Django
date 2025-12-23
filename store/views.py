@@ -127,34 +127,44 @@ def checkout(request):
         messages.warning(request, "Your cart is empty!")
         return redirect('store:cart')
 
-    # Calculate totals
+    # calculate totals
     amount = 0
     cart_data = []
     for item in cart_items:
-        line_total = item.quantity * item.product.price
-        amount += line_total
+        line = item.quantity * item.product.price
+        amount += line
         cart_data.append({
             'product': item.product,
             'quantity': item.quantity,
-            'line_total': line_total,
+            'line_total': line
         })
 
-    shipping_amount = decimal.Decimal(10)
-    total_amount = amount + shipping_amount
+    shipping = decimal.Decimal(10)
+    total = amount + shipping
 
-    if request.method == 'POST':
-        address_id = request.POST.get('address')
+    if request.method == "POST":
+        saved_addr_id = request.POST.get('address')
+        payment_method = request.POST.get('payment_method')
 
-        # ✅ IMPORTANT VALIDATION
-        if not address_id:
-            messages.error(request, "Please select a delivery address.")
-            return redirect('store:checkout')
+        # NEW ADDRESS
+        new_locality = request.POST.get('locality')
+        new_city = request.POST.get('city')
+        new_state = request.POST.get('state')
 
-        address = get_object_or_404(
-            Address,
-            id=int(address_id),
-            user=request.user
-        )
+        # Choose saved address OR create a new one
+        if saved_addr_id:
+            address = get_object_or_404(Address, id=saved_addr_id, user=request.user)
+        else:
+            if not(new_locality and new_city and new_state):
+                messages.error(request, "Please fill all fields for new address.")
+                return redirect('store:checkout')
+
+            address = Address.objects.create(
+                user=request.user,
+                locality=new_locality,
+                city=new_city,
+                state=new_state
+            )
 
         # Create orders
         for item in cart_items:
@@ -162,19 +172,24 @@ def checkout(request):
                 user=request.user,
                 address=address,
                 product=item.product,
-                quantity=item.quantity
+                quantity=item.quantity,
+                payment_method=payment_method
             )
             item.delete()
 
-        messages.success(request, "Order placed successfully! Pay on delivery.")
+        if payment_method == "QR":
+            messages.success(request, "Order placed! Payment verified using QR.")
+        else:
+            messages.success(request, "Order placed! Pay on delivery.")
+
         return redirect('store:orders')
 
     return render(request, 'store/checkout.html', {
         'cart_items': cart_data,
         'addresses': addresses,
         'amount': amount,
-        'shipping_amount': shipping_amount,
-        'total_amount': total_amount,
+        'shipping_amount': shipping,
+        'total_amount': total,
     })
 
 

@@ -82,9 +82,19 @@ class Order(models.Model):
     address = models.ForeignKey(Address, verbose_name="Shipping Address", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name="Product", on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name="Quantity")
+
+    payment_method = models.CharField(
+        max_length=10,
+        default="COD"
+    )
+
     ordered_date = models.DateTimeField(auto_now_add=True, verbose_name="Ordered Date")
     status = models.CharField(
         choices=STATUS_CHOICES,
         max_length=50,
         default="Pending"
-        )
+    )
+
+    def __str__(self):
+        return f"Order #{self.id}"
+
