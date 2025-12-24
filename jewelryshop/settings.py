@@ -12,7 +12,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-fallback-key')
 DEBUG = False
 
 # Allowed hosts: replace with your Render URL
-ALLOWED_HOSTS = ['E-Commerce_Django.onrender.com']  # replace with your actual Render URL
+ALLOWED_HOSTS = ['https://e-commerce-django-b47w.onrender.com']  # replace with your actual Render URL
 
 # Installed apps
 INSTALLED_APPS = [
