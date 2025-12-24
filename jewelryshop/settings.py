@@ -1,15 +1,20 @@
 from pathlib import Path
 import os
 
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-3%y3laftm62q0zaj+s7#p-xqq9(&#q+)s8)p-&#&bz*0$!xu$0'
+# SECURITY
+# Use environment variable for SECRET_KEY in production
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-fallback-key')
 
-DEBUG = True
+# DEBUG should be False on production
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+# Allowed hosts: replace with your Render URL
+ALLOWED_HOSTS = ['E-Commerce_Django.onrender.com']  # replace with your actual Render URL
 
-
+# Installed apps
 INSTALLED_APPS = [
     "unfold",  
     'django.contrib.admin',
@@ -22,13 +27,14 @@ INSTALLED_APPS = [
     'store',
     'django_extensions',
 ]
+
 UNFOLD = {
     "SITE_TITLE": "E-Commerce Admin",
     "SITE_HEADER": "E-Commerce Dashboard",
     "THEME": "dark",   # light / dark / auto
 }
 
-
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -39,10 +45,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
+# URLs and WSGI
 ROOT_URLCONF = 'jewelryshop.urls'
+WSGI_APPLICATION = 'jewelryshop.wsgi.application'
 
-
+# Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -61,18 +68,15 @@ TEMPLATES = [
     },
 ]
 
-
-WSGI_APPLICATION = 'jewelryshop.wsgi.application'
-
-
+# Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # fine for small demo
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-
+# Password validators
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -80,23 +84,24 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
+# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-
+# Static files (CSS, JS, images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'jewelryshop/static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'jewelryshop/static')]  # your app static folder
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Render serves this folder
 
-
+# Media files (uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email backend (console is fine for demo)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
