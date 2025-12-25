@@ -1,109 +1,158 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
+# ------------------------
 # Base directory
+# ------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY
-# Use environment variable for SECRET_KEY in production
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-fallback-key')
+# ------------------------
+# Secret key & debug
+# ------------------------
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-local-fallback-key")
 
-# DEBUG should be False on production
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", "True") == "True"  # True locally, False on Render
 
-# Allowed hosts: replace with your Render URL
-ALLOWED_HOSTS = ['e-commerce-django-b47w.onrender.com']
-  # replace with your actual Render URL
+# ------------------------
+# Allowed hosts
+# ------------------------
+# Works both locally and on Render
+ALLOWED_HOSTS = os.environ.get(
+    "DJANGO_ALLOWED_HOSTS",
+    "localhost,127.0.0.1,e-commerce-django-b47w.onrender.com,.onrender.com",
+).split(",")
 
+# ------------------------
+# CSRF trusted origins (needed for Render / production)
+# ------------------------
+CSRF_TRUSTED_ORIGINS = [
+    "https://e-commerce-django-b47w.onrender.com",
+]
+
+# ------------------------
 # Installed apps
+# ------------------------
 INSTALLED_APPS = [
-    "unfold",  
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'store',
-    'django_extensions',
+    "unfold",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.humanize",
+    "store",
+    "django_extensions",
 ]
 
 UNFOLD = {
     "SITE_TITLE": "E-Commerce Admin",
     "SITE_HEADER": "E-Commerce Dashboard",
-    "THEME": "dark",   # light / dark / auto
+    "THEME": "light",  # light / dark / auto
 }
 
+# ------------------------
 # Middleware
+# ------------------------
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # must be after SecurityMiddleware
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# URLs and WSGI
-ROOT_URLCONF = 'jewelryshop.urls'
-WSGI_APPLICATION = 'jewelryshop.wsgi.application'
+# ------------------------
+# URL configuration
+# ------------------------
+ROOT_URLCONF = "jewelryshop.urls"
+WSGI_APPLICATION = "jewelryshop.wsgi.application"
 
+# ------------------------
 # Templates
+# ------------------------
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'store.context_preprocessors.store_menu',
-                'store.context_preprocessors.cart_menu',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "store.context_preprocessors.store_menu",
+                "store.context_preprocessors.cart_menu",
             ],
         },
     },
 ]
 
-# Database
+# ------------------------
+# Database (SQLite for demo)
+# ------------------------
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # fine for small demo
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
-# Password validators
+# ------------------------
+# Password validation
+# ------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
+# ------------------------
 # Internationalization
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+# ------------------------
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static files (CSS, JS, images)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'jewelryshop/static')]  # your app static folder
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Render serves this folder
+# ------------------------
+# Static files (CSS, JS)
+# ------------------------
+STATIC_URL = "/static/"
 
+# Folder for development static files
+STATICFILES_DIRS = [BASE_DIR / "jewelryshop" / "static"]
+
+# Folder for production static files (WhiteNoise serves this)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# ------------------------
 # Media files (uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# ------------------------
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
+# ------------------------
 # Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# ------------------------
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Email backend (console is fine for demo)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# ------------------------
+# Email backend
+# ------------------------
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# ------------------------
+# Security for proxy headers (Render)
+# ------------------------
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
