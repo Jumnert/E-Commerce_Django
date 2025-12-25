@@ -18,16 +18,15 @@ DEBUG = os.environ.get("DEBUG", "True") == "True"  # True locally, False on Rend
 # ------------------------
 # Works both locally and on Render
 ALLOWED_HOSTS = os.environ.get(
-    "DJANGO_ALLOWED_HOSTS",
-    "localhost,127.0.0.1,e-commerce-django-b47w.onrender.com,.onrender.com",
+    "DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,e-commerce-django-b47w.onrender.com"
 ).split(",")
 
-# ------------------------
-# CSRF trusted origins (needed for Render / production)
-# ------------------------
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://e-commerce-django-b47w.onrender.com",
 ]
+
 
 # ------------------------
 # Installed apps
