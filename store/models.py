@@ -77,6 +77,12 @@ STATUS_CHOICES = (
     ('Cancelled', 'Cancelled')
 )
 
+PAYMENT_STATUS_CHOICES = (
+    ('Pending', 'Pending'),
+    ('Verified', 'Verified'),
+    ('Rejected', 'Rejected')
+)
+
 class Order(models.Model):
     user = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE)
     address = models.ForeignKey(Address, verbose_name="Shipping Address", on_delete=models.CASCADE)
@@ -86,6 +92,33 @@ class Order(models.Model):
     payment_method = models.CharField(
         max_length=10,
         default="COD"
+    )
+    
+    # New fields for QR payment
+    payment_proof = models.ImageField(
+        upload_to='payment_proofs', 
+        blank=True, 
+        null=True, 
+        verbose_name="Payment Proof Screenshot"
+    )
+    
+    payment_status = models.CharField(
+        choices=PAYMENT_STATUS_CHOICES,
+        max_length=20,
+        default="Pending",
+        verbose_name="Payment Verification Status"
+    )
+    
+    payment_verified_at = models.DateTimeField(
+        blank=True, 
+        null=True, 
+        verbose_name="Payment Verified Date"
+    )
+    
+    admin_notes = models.TextField(
+        blank=True, 
+        null=True, 
+        verbose_name="Admin Notes"
     )
 
     ordered_date = models.DateTimeField(auto_now_add=True, verbose_name="Ordered Date")
@@ -97,4 +130,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id}"
-
+    
+    @property
+    def total_amount(self):
+        return self.quantity * self.product.price

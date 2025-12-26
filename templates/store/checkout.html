@@ -1,106 +1,497 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container py-5">
-
   <h2 class="mb-4">Checkout</h2>
 
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data" id="checkout-form">
     {% csrf_token %}
     <div class="row">
-
       <!-- LEFT SIDE: BILLING -->
       <div class="col-lg-8">
-
         <!-- Saved Address -->
         <label class="mt-3 font-weight-bold">Saved Address</label>
-        <select class="form-control" name="address">
+        <select class="form-control" name="address" id="saved-address">
           <option value="">-- Use new address --</option>
           {% for addr in addresses %}
-            <option value="{{ addr.id }}">{{ addr.locality }}, {{ addr.city }}, {{ addr.state }}</option>
+          <option value="{{ addr.id }}">
+            {{ addr.locality }}, {{ addr.city }}, {{ addr.state }}
+          </option>
           {% endfor %}
         </select>
 
-        <hr>
+        <hr />
 
         <!-- New Address -->
-        <h5>New Address</h5>
-        <div class="row">
-          <div class="col-lg-6 form-group">
-            <label>Locality</label>
-            <input type="text" name="locality" class="form-control">
-          </div>
+        <div id="new-address-section">
+          <h5>New Address</h5>
+          <div class="row">
+            <div class="col-lg-6 form-group">
+              <label
+                >Locality
+                <span class="text-danger" id="locality-required">*</span></label
+              >
+              <input
+                type="text"
+                name="locality"
+                id="locality"
+                class="form-control"
+                placeholder="Street, building, etc."
+              />
+            </div>
 
-          <div class="col-lg-6 form-group">
-            <label>City</label>
-            <input type="text" name="city" class="form-control">
-          </div>
+            <div class="col-lg-6 form-group">
+              <label
+                >City
+                <span class="text-danger" id="city-required">*</span></label
+              >
+              <input
+                type="text"
+                name="city"
+                id="city"
+                class="form-control"
+                placeholder="City name"
+              />
+            </div>
 
-          <div class="col-lg-6 form-group">
-            <label>State</label>
-            <input type="text" name="state" class="form-control">
+            <div class="col-lg-6 form-group">
+              <label
+                >State/Province
+                <span class="text-danger" id="state-required">*</span></label
+              >
+              <input
+                type="text"
+                name="state"
+                id="state"
+                class="form-control"
+                placeholder="State or Province"
+              />
+            </div>
           </div>
         </div>
-
       </div>
 
       <!-- RIGHT SIDE: ORDER SUMMARY -->
       <div class="col-lg-4">
-        <div class="card p-3 bg-light">
-
-          <h4>Your Order</h4>
+        <div class="card p-3 bg-light shadow-sm">
+          <h4 class="mb-3"><i class="fas fa-shopping-cart"></i> Your Order</h4>
           <ul class="list-group mb-3">
             {% for item in cart_items %}
-            <li class="list-group-item d-flex justify-content-between">
-              <span>{{ item.product.name }}</span>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <div class="fw-bold">{{ item.product.title }}</div>
+                <small class="text-muted"
+                  >Qty: {{ item.quantity }} × ${{ item.product.price }}</small
+                >
+              </div>
               <strong>${{ item.line_total }}</strong>
             </li>
             {% endfor %}
 
             <li class="list-group-item d-flex justify-content-between">
-              <strong>Total</strong>
+              <span>Shipping</span>
+              <strong>${{ shipping_amount }}</strong>
+            </li>
+
+            <li
+              class="list-group-item d-flex justify-content-between bg-dark text-white"
+            >
+              <strong><i class="fas fa-dollar-sign"></i> Total</strong>
               <strong>${{ total_amount }}</strong>
             </li>
           </ul>
 
-          <h5>Payment Method</h5>
+          <hr />
 
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="payment_method" value="COD" checked>
-            <label class="form-check-label">Cash on Delivery</label>
+          <h5 class="mb-3">
+            <i class="fas fa-credit-card"></i> Payment Method
+          </h5>
+
+          <div
+            class="form-check mb-2 p-3 border rounded"
+            style="cursor: pointer"
+          >
+            <input
+              class="form-check-input"
+              type="radio"
+              name="payment_method"
+              value="COD"
+              id="cod"
+              checked
+            />
+            <label
+              class="form-check-label w-100"
+              for="cod"
+              style="cursor: pointer"
+            >
+              <i class="fas fa-money-bill-wave text-success"></i>
+              <strong>Cash on Delivery</strong> <br /><small class="text-muted"
+                >Pay when you receive your order</small
+              >
+            </label>
           </div>
 
-          <div class="form-check mt-2">
-            <input class="form-check-input" type="radio" name="payment_method" value="QR">
-            <label class="form-check-label">Pay by QR Code</label>
+          <div class="form-check p-3 border rounded" style="cursor: pointer">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="payment_method"
+              value="QR"
+              id="qr"
+            />
+            <label
+              class="form-check-label w-100"
+              for="qr"
+              style="cursor: pointer"
+            >
+              <i class="fas fa-qrcode text-primary"></i>
+              <strong>ABA PayWay QR</strong> <br /><small class="text-muted"
+                >Pay now with ABA mobile banking</small
+              >
+            </label>
           </div>
 
-          <!-- QR PREVIEW -->
-          <div id="qr-box" style="display:none" class="text-center mt-3">
-            <p>Scan to pay</p>
-            <img src="{% static 'img/KHQR.jpg' %}" width="200" class="border p-2">
+          <!-- QR PAYMENT SECTION -->
+          <div id="qr-box" style="display: none" class="mt-3">
+            <div class="card border-primary shadow-sm">
+              <div class="card-body">
+                <!-- Step 1: Payment Link -->
+                <div class="text-center mb-4">
+                  <h6 class="text-primary mb-3">
+                    <span class="badge badge-primary">1</span> Click to Pay with
+                    ABA
+                  </h6>
+                  <div class="alert alert-success">
+                    <strong>Amount to Pay: ${{ total_amount }}</strong>
+                  </div>
+
+                  <a
+                    href="https://link.payway.com.kh/aba?id=B399A3EADF4E&dynamic=true&source_caller=sdk&pid=af_app_invites&link_action=abaqr&shortlink=hud7wwic&amount={{ total_amount }}&created_from_app=true&acc=012156272&af_siteid=968860649&userid=B399A3EADF4E&code=470174&c=abaqr&af_referrer_uid=1727345277488-5767566"
+                    target="_blank"
+                    class="btn btn-primary btn-lg btn-block mb-3"
+                    id="payment-link"
+                  >
+                    <i class="fas fa-external-link-alt"></i> Open ABA Payment
+                    Page
+                  </a>
+
+                  <div class="alert alert-info">
+                    <small>
+                      <i class="fas fa-info-circle"></i>
+                      Click the button above to open ABA payment page in a new
+                      window
+                    </small>
+                  </div>
+                </div>
+
+                <hr />
+
+                <!-- Step 2: Upload Screenshot -->
+                <div>
+                  <h6 class="text-primary mb-3">
+                    <span class="badge badge-primary">2</span> Upload Payment
+                    Proof
+                  </h6>
+
+                  <div class="form-group">
+                    <label for="payment_proof" class="font-weight-bold">
+                      Payment Screenshot <span class="text-danger">*</span>
+                    </label>
+                    <div class="custom-file">
+                      <input
+                        type="file"
+                        class="custom-file-input"
+                        id="payment_proof"
+                        name="payment_proof"
+                        accept="image/*"
+                      />
+                      <label class="custom-file-label" for="payment_proof"
+                        >Choose file...</label
+                      >
+                    </div>
+                    <small class="form-text text-muted">
+                      <i class="fas fa-info-circle"></i> Upload a clear
+                      screenshot of successful payment (Max 5MB)
+                    </small>
+                  </div>
+
+                  <!-- Image Preview -->
+                  <div
+                    id="image-preview"
+                    class="text-center mt-3"
+                    style="display: none"
+                  >
+                    <p class="small font-weight-bold mb-2">Preview:</p>
+                    <div class="position-relative d-inline-block">
+                      <img
+                        id="preview-img"
+                        src=""
+                        class="img-thumbnail"
+                        style="max-width: 100%; max-height: 300px"
+                      />
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-danger position-absolute"
+                        id="remove-preview"
+                        style="top: 5px; right: 5px"
+                      >
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Instructions -->
+                <div class="alert alert-warning mt-3 mb-0">
+                  <strong
+                    ><i class="fas fa-exclamation-triangle"></i> Important
+                    Steps:</strong
+                  >
+                  <ol class="mb-0 mt-2 pl-3">
+                    <li>Click "Open ABA Payment Page" button</li>
+                    <li>
+                      Complete payment of <strong>${{ total_amount }}</strong>
+                    </li>
+                    <li>Take screenshot of success message</li>
+                    <li>Return here and upload screenshot</li>
+                    <li>Click "Place Order" below</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <button class="btn btn-dark btn-block mt-4">Place Order</button>
+          <button
+            type="submit"
+            class="btn btn-dark btn-lg btn-block mt-4"
+            id="submit-btn"
+          >
+            <i class="fas fa-check-circle"></i> Place Order
+          </button>
 
+          <p class="text-center text-muted mt-2 mb-0">
+            <small><i class="fas fa-lock"></i> Secure checkout</small>
+          </p>
         </div>
       </div>
-
     </div>
   </form>
-
 </div>
 
 <script>
-  const qrBox = document.getElementById('qr-box');
+  // Elements
+  const qrBox = document.getElementById("qr-box");
   const radios = document.querySelectorAll('input[name="payment_method"]');
+  const paymentProofInput = document.getElementById("payment_proof");
+  const imagePreview = document.getElementById("image-preview");
+  const previewImg = document.getElementById("preview-img");
+  const removePreviewBtn = document.getElementById("remove-preview");
+  const checkoutForm = document.getElementById("checkout-form");
+  const savedAddress = document.getElementById("saved-address");
+  const paymentLink = document.getElementById("payment-link");
+  const newAddressFields = ["locality", "city", "state"];
 
-  radios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      qrBox.style.display = radio.value === 'QR' ? 'block' : 'none';
+  // Toggle payment method
+  radios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (radio.value === "QR") {
+        qrBox.style.display = "block";
+        paymentProofInput.setAttribute("required", "required");
+      } else {
+        qrBox.style.display = "none";
+        paymentProofInput.removeAttribute("required");
+        imagePreview.style.display = "none";
+      }
     });
   });
+
+  // Track if payment link was clicked
+  let paymentLinkClicked = false;
+  paymentLink.addEventListener("click", function () {
+    paymentLinkClicked = true;
+    this.classList.remove("btn-primary");
+    this.classList.add("btn-success");
+    this.innerHTML = '<i class="fas fa-check"></i> Payment Page Opened';
+
+    // Show reminder after 3 seconds
+    setTimeout(() => {
+      if (!paymentProofInput.files.length) {
+        alert(
+          "💡 Reminder: After completing payment, come back here and upload your payment screenshot!"
+        );
+      }
+    }, 3000);
+  });
+
+  // Handle address selection
+  savedAddress.addEventListener("change", function () {
+    const isNewAddress = this.value === "";
+    newAddressFields.forEach((field) => {
+      const input = document.getElementById(field);
+      const required = document.getElementById(`${field}-required`);
+      if (isNewAddress) {
+        input.setAttribute("required", "required");
+        if (required) required.style.display = "inline";
+      } else {
+        input.removeAttribute("required");
+        if (required) required.style.display = "none";
+      }
+    });
+  });
+
+  // File input handling
+  paymentProofInput.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+    const label = document.querySelector(".custom-file-label");
+
+    if (file) {
+      // Update label
+      label.textContent = file.name;
+
+      // Validate size (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert("⚠️ File is too large! Maximum size is 5MB.");
+        this.value = "";
+        label.textContent = "Choose file...";
+        return;
+      }
+
+      // Validate type
+      const validTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/webp",
+        "image/heic",
+      ];
+      if (!validTypes.includes(file.type)) {
+        alert("⚠️ Invalid file type! Please upload JPG, PNG, or WEBP image.");
+        this.value = "";
+        label.textContent = "Choose file...";
+        return;
+      }
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        previewImg.src = event.target.result;
+        imagePreview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    } else {
+      label.textContent = "Choose file...";
+      imagePreview.style.display = "none";
+    }
+  });
+
+  // Remove preview
+  removePreviewBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    paymentProofInput.value = "";
+    document.querySelector(".custom-file-label").textContent = "Choose file...";
+    imagePreview.style.display = "none";
+  });
+
+  // Form validation
+  checkoutForm.addEventListener("submit", function (e) {
+    const qrRadio = document.getElementById("qr");
+    const savedAddrValue = savedAddress.value;
+
+    // Validate address
+    if (!savedAddrValue) {
+      const hasAllFields = newAddressFields.every((field) => {
+        const val = document.getElementById(field).value.trim();
+        return val !== "";
+      });
+
+      if (!hasAllFields) {
+        e.preventDefault();
+        alert(
+          "⚠️ Please fill in all address fields or select a saved address."
+        );
+        return false;
+      }
+    }
+
+    // Validate QR payment
+    if (qrRadio.checked) {
+      if (!paymentLinkClicked) {
+        e.preventDefault();
+        const proceed = confirm(
+          "⚠️ You haven't opened the payment page yet. Have you already completed the payment?"
+        );
+        if (!proceed) {
+          return false;
+        }
+      }
+
+      if (!paymentProofInput.files.length) {
+        e.preventDefault();
+        alert(
+          "⚠️ Please upload your payment screenshot before placing the order."
+        );
+        paymentProofInput.focus();
+        return false;
+      }
+    }
+
+    // Show loading state
+    const submitBtn = document.getElementById("submit-btn");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> Processing...';
+  });
 </script>
+
+<style>
+  #qr-box {
+    animation: slideDown 0.4s ease-in-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .form-check {
+    transition: all 0.3s ease;
+  }
+
+  .form-check:hover {
+    background-color: #f8f9fa;
+  }
+
+  .custom-file-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .img-thumbnail {
+    border: 3px solid #007bff;
+  }
+
+  .badge {
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  #payment-link {
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+
+  #payment-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+</style>
 
 {% endblock %}

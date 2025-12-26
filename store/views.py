@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.views import View
+from django.conf import settings  # ADD THIS LINE
 import decimal
 
 from .models import Address, Cart, Category, Order, Product
@@ -166,21 +167,46 @@ def checkout(request):
                 state=new_state
             )
 
-        # Create orders
+        # Handle payment proof for QR payment
+        payment_proof = None
+        if payment_method == "QR":
+            payment_proof = request.FILES.get('payment_proof')
+            if not payment_proof:
+                messages.error(request, "Please upload your payment screenshot for QR payment.")
+                return redirect('store:checkout')
+            
+            # Validate file size (max 5MB)
+            if payment_proof.size > 5 * 1024 * 1024:
+                messages.error(request, "Payment proof image is too large. Maximum size is 5MB.")
+                return redirect('store:checkout')
+            
+            # Validate file type
+            allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
+            if payment_proof.content_type not in allowed_types:
+                messages.error(request, "Invalid file type. Please upload a valid image (JPG, PNG, or WEBP).")
+                return redirect('store:checkout')
+
+        # Create orders for each cart item
         for item in cart_items:
             Order.objects.create(
                 user=request.user,
                 address=address,
                 product=item.product,
                 quantity=item.quantity,
-                payment_method=payment_method
+                payment_method=payment_method,
+                payment_proof=payment_proof,
+                payment_status='Pending' if payment_method == 'QR' else 'Verified'
             )
             item.delete()
 
         if payment_method == "QR":
-            messages.success(request, "Order placed! Payment verified using QR.")
+            messages.success(
+                request, 
+                "Order placed successfully! Your payment is under review. "
+                "You will be notified once the admin verifies your payment."
+            )
         else:
-            messages.success(request, "Order placed! Pay on delivery.")
+            messages.success(request, "Order placed successfully! Pay on delivery.")
 
         return redirect('store:orders')
 
@@ -191,7 +217,6 @@ def checkout(request):
         'shipping_amount': shipping,
         'total_amount': total,
     })
-
 
 
 @login_required
@@ -237,4 +262,3 @@ def remove_address(request, id):
     address.delete()
     messages.success(request, "Address removed successfully.")
     return redirect('store:profile')
-

@@ -100,4 +100,5 @@ urlpatterns = [
 
     # Test
     path('product/test/', views.test, name="test"),
+    
 ]
