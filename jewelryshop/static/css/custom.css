@@ -1,1 +1,547 @@
-/* your styles go here */
+/* your styles go here */ /* =========================================
+   GLOBAL DARK MODE RESET
+   ========================================= */
+
+html,
+body {
+  background-color: #0b0f19 !important;
+  color: #e5e7eb !important;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffffff !important;
+}
+
+/* Paragraphs & text */
+p,
+span,
+small,
+label {
+  color: #cbd5e1 !important;
+}
+
+/* Links */
+a {
+  color: #4da3ff !important;
+}
+a:hover {
+  color: #79b8ff !important;
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+
+.header {
+  background-color: #0b0f19 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-light {
+  background-color: transparent !important;
+}
+
+.navbar-brand span {
+  color: #ffffff !important;
+}
+
+/* Nav links */
+.navbar-light .navbar-nav .nav-link {
+  color: #cbd5e1 !important;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+  color: #4da3ff !important;
+}
+
+/* Active nav item */
+.navbar-light .navbar-nav .active > .nav-link {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Icons */
+.navbar i,
+.fas,
+.far {
+  color: #9ca3af !important;
+}
+
+/* Mobile toggler */
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* =========================================
+   DROPDOWNS
+   ========================================= */
+
+.dropdown-menu {
+  background-color: #111827 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-item {
+  color: #d1d5db !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: rgba(77, 163, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.dropdown-divider,
+.dropdown-menu hr {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* =========================================
+   CARDS
+   ========================================= */
+
+.card {
+  background-color: #111827 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.card-title {
+  color: #ffffff !important;
+}
+
+.card-text {
+  color: #cbd5e1 !important;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.btn {
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #4da3ff !important;
+  border-color: #4da3ff !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover {
+  background-color: #79b8ff !important;
+}
+
+.btn-outline-dark {
+  color: #e5e7eb !important;
+  border-color: #374151 !important;
+}
+
+.btn-outline-dark:hover {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+/* =========================================
+   FORMS & INPUTS
+   ========================================= */
+
+.form-control,
+.custom-select {
+  background-color: #0f172a !important;
+  border: 1px solid #374151 !important;
+  color: #e5e7eb !important;
+}
+
+.form-control::placeholder {
+  color: #9ca3af !important;
+}
+
+.form-control:focus {
+  background-color: #0f172a !important;
+  border-color: #4da3ff !important;
+  box-shadow: none !important;
+}
+
+/* =========================================
+   TABLES
+   ========================================= */
+
+.table {
+  color: #e5e7eb !important;
+}
+
+.table th,
+.table td {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.table thead th {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+}
+
+/* =========================================
+   PAGINATION
+   ========================================= */
+
+.page-link {
+  background-color: #111827 !important;
+  color: #cbd5e1 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.page-link:hover {
+  background-color: rgba(77, 163, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.page-item.active .page-link {
+  background-color: #4da3ff !important;
+  border-color: #4da3ff !important;
+  color: #ffffff !important;
+}
+
+/* =========================================
+   ALERTS
+   ========================================= */
+
+.alert {
+  background-color: #111827 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e5e7eb !important;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+footer {
+  background-color: #0b0f19 !important;
+  color: #9ca3af !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* =========================================
+   BOOTSTRAP UTILITY OVERRIDES
+   ========================================= */
+
+/* Background utilities */
+.bg-white,
+.bg-light {
+  background-color: #111827 !important;
+}
+
+.bg-dark {
+  background-color: #020617 !important;
+}
+
+/* Text utilities */
+.text-dark {
+  color: #e5e7eb !important;
+}
+
+.text-muted {
+  color: #9ca3af !important;
+}
+
+/* Borders */
+.border,
+.border-top,
+.border-bottom,
+.border-left,
+.border-right {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Shadows */
+.shadow,
+.shadow-sm,
+.shadow-lg {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* =========================================
+   LIST GROUP
+   ========================================= */
+
+.list-group-item {
+  background-color: #111827 !important;
+  color: #e5e7eb !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.list-group-item-action:hover {
+  background-color: rgba(77, 163, 255, 0.15) !important;
+}
+
+/* =========================================
+   BADGES
+   ========================================= */
+
+.badge {
+  background-color: #1f2933 !important;
+  color: #e5e7eb !important;
+}
+
+.badge-primary {
+  background-color: #4da3ff !important;
+}
+
+.badge-secondary {
+  background-color: #6b7280 !important;
+}
+
+/* =========================================
+   BREADCRUMB
+   ========================================= */
+
+.breadcrumb {
+  background-color: transparent !important;
+}
+
+.breadcrumb-item a {
+  color: #4da3ff !important;
+}
+
+.breadcrumb-item.active {
+  color: #9ca3af !important;
+}
+
+/* =========================================
+   MODALS
+   ========================================= */
+
+.modal-content {
+  background-color: #0f172a !important;
+  color: #e5e7eb !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header,
+.modal-footer {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.close {
+  color: #e5e7eb !important;
+  opacity: 1;
+}
+
+/* =========================================
+   NAV TABS / PILLS
+   ========================================= */
+
+.nav-tabs {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-tabs .nav-link {
+  color: #9ca3af !important;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================
+   PROGRESS BAR
+   ========================================= */
+
+.progress {
+  background-color: #020617 !important;
+}
+
+.progress-bar {
+  background-color: #4da3ff !important;
+}
+
+/* =========================================
+   CAROUSEL
+   ========================================= */
+
+.carousel-caption {
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+}
+
+/* =========================================
+   TABLE STRIPED / HOVER
+   ========================================= */
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(77, 163, 255, 0.1) !important;
+}
+
+/* =========================================
+   HR
+   ========================================= */
+
+hr {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* =========================================
+   IMAGES (OPTIONAL)
+   ========================================= */
+
+img {
+  filter: brightness(0.95) contrast(1.05);
+}
+/* =========================================
+   FORCE NAVBAR DROPDOWNS TO WORK (DARK MODE)
+   ========================================= */
+
+/* Ensure dropdown is above everything */
+.navbar .dropdown-menu {
+  z-index: 1050 !important;
+}
+
+/* Fix background + border */
+.navbar .dropdown-menu {
+  background-color: #111827 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  padding: 0.5rem 0;
+}
+
+/* Fix dropdown links */
+.navbar .dropdown-menu .dropdown-item {
+  color: #e5e7eb !important;
+  padding: 0.5rem 1.25rem;
+}
+
+/* Hover / focus state */
+.navbar .dropdown-menu .dropdown-item:hover,
+.navbar .dropdown-menu .dropdown-item:focus {
+  background-color: rgba(77, 163, 255, 0.18) !important;
+  color: #ffffff !important;
+}
+
+/* Active dropdown item */
+.navbar .dropdown-menu .dropdown-item.active {
+  background-color: #4da3ff !important;
+  color: #ffffff !important;
+}
+
+/* Fix dropdown toggle arrow color */
+.navbar-light .navbar-nav .nav-link.dropdown-toggle {
+  color: #cbd5e1 !important;
+}
+
+/* Make caret visible */
+.dropdown-toggle::after {
+  border-top-color: #cbd5e1 !important;
+}
+
+/* Divider inside dropdown */
+.navbar .dropdown-divider,
+.navbar .dropdown-menu hr {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* =========================
+   MOBILE FIX
+   ========================= */
+
+/* Mobile dropdown background */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background-color: #0b0f19 !important;
+    padding: 1rem;
+  }
+
+  .navbar .dropdown-menu {
+    position: static !important;
+    float: none;
+    box-shadow: none;
+  }
+}
+/* ===== Navbar Dropdown Colors ===== */
+
+/* Dropdown menu default background */
+.navbar-nav .dropdown-menu {
+  background-color: #ffffff; /* White background */
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 0.25rem;
+  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+/* Dropdown items default */
+.navbar-nav .dropdown-menu .dropdown-item {
+  color: #333; /* Dark text */
+  padding: 0.5rem 1rem;
+  transition: background 0.3s ease, color 0.3s ease;
+  background-color: #0b0f19; /* Ensure white background by default */
+}
+
+/* Hover effect for dropdown items only */
+.navbar-nav .dropdown-menu .dropdown-item:hover {
+  background-color: #333; /* Dark blue background */
+  color: #ffffff; /* White text */
+}
+
+/* Optional: caret icon spacing */
+.navbar-nav .dropdown-toggle::after {
+  margin-left: 0.5rem;
+}
+/* ===== User Profile Jumbotron ===== */
+
+.jumbotron {
+  background-color: #0b0f19; /* Light gray background */
+  padding: 2rem 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.jumbotron h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e3a8a; /* Dark blue title */
+  margin-bottom: 0.5rem;
+}
+
+.jumbotron p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.jumbotron .btn-primary {
+  background-color: #1e3a8a;
+  border-color: #1e3a8a;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.jumbotron .btn-primary:hover {
+  background-color: #0f1f5f;
+  border-color: #0f1f5f;
+}
+
+.jumbotron .btn-outline-primary {
+  border-color: #1e3a8a;
+  color: #1e3a8a;
+  transition: all 0.3s ease;
+}
+
+.jumbotron .btn-outline-primary:hover {
+  background-color: #1e3a8a;
+  color: #fff;
+}
