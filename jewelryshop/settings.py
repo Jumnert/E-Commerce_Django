@@ -32,7 +32,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Installed apps
 # ------------------------
 INSTALLED_APPS = [
-    "unfold",
+    'django_daisy',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     "store",
     "django_extensions",
 ]
+
+DAISY_THEME = "dracula"
+
 
 UNFOLD = {
     "SITE_TITLE": "E-Commerce Admin",
