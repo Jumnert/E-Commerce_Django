@@ -1,11 +1,11 @@
 /* your styles go here */ /* =========================================
-   GLOBAL DARK MODE RESET
+   GLOBAL PINK VIBE DARK MODE
    ========================================= */
 
 html,
 body {
-  background-color: #0b0f19 !important;
-  color: #e5e7eb !important;
+  background-color: #1a0d1f !important;
+  color: #f0d7e8 !important;
 }
 
 /* Headings */
@@ -15,7 +15,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #ffffff !important;
+  color: #ffc2e8 !important;
 }
 
 /* Paragraphs & text */
@@ -23,15 +23,15 @@ p,
 span,
 small,
 label {
-  color: #cbd5e1 !important;
+  color: #e8bfd9 !important;
 }
 
 /* Links */
 a {
-  color: #4da3ff !important;
+  color: #ff6eb4 !important;
 }
 a:hover {
-  color: #79b8ff !important;
+  color: #ff9ed6 !important;
 }
 
 /* =========================================
@@ -39,8 +39,8 @@ a:hover {
    ========================================= */
 
 .header {
-  background-color: #0b0f19 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #1a0d1f !important;
+  border-bottom: 1px solid rgba(255, 110, 180, 0.2);
 }
 
 .navbar-light {
@@ -48,22 +48,22 @@ a:hover {
 }
 
 .navbar-brand span {
-  color: #ffffff !important;
+  color: #ffc2e8 !important;
 }
 
 /* Nav links */
 .navbar-light .navbar-nav .nav-link {
-  color: #cbd5e1 !important;
+  color: #e8bfd9 !important;
 }
 
 .navbar-light .navbar-nav .nav-link:hover,
 .navbar-light .navbar-nav .nav-link:focus {
-  color: #4da3ff !important;
+  color: #ff6eb4 !important;
 }
 
 /* Active nav item */
 .navbar-light .navbar-nav .active > .nav-link {
-  color: #ffffff !important;
+  color: #ffc2e8 !important;
   font-weight: 600;
 }
 
@@ -71,12 +71,12 @@ a:hover {
 .navbar i,
 .fas,
 .far {
-  color: #9ca3af !important;
+  color: #d89cc5 !important;
 }
 
 /* Mobile toggler */
 .navbar-toggler {
-  border-color: rgba(255, 255, 255, 0.4) !important;
+  border-color: rgba(255, 110, 180, 0.5) !important;
 }
 .navbar-toggler-icon {
   filter: invert(1);
@@ -87,23 +87,23 @@ a:hover {
    ========================================= */
 
 .dropdown-menu {
-  background-color: #111827 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #2d1738 !important;
+  border: 1px solid rgba(255, 110, 180, 0.2);
 }
 
 .dropdown-item {
-  color: #d1d5db !important;
+  color: #e8bfd9 !important;
 }
 
 .dropdown-item:hover,
 .dropdown-item:focus {
-  background-color: rgba(77, 163, 255, 0.15) !important;
-  color: #ffffff !important;
+  background-color: rgba(255, 110, 180, 0.25) !important;
+  color: #ffc2e8 !important;
 }
 
 .dropdown-divider,
 .dropdown-menu hr {
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 110, 180, 0.2) !important;
 }
 
 /* =========================================
@@ -111,16 +111,16 @@ a:hover {
    ========================================= */
 
 .card {
-  background-color: #111827 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #2d1738 !important;
+  border: 1px solid rgba(255, 110, 180, 0.2);
 }
 
 .card-title {
-  color: #ffffff !important;
+  color: #ffc2e8 !important;
 }
 
 .card-text {
-  color: #cbd5e1 !important;
+  color: #e8bfd9 !important;
 }
 
 /* =========================================
@@ -132,22 +132,22 @@ a:hover {
 }
 
 .btn-primary {
-  background-color: #4da3ff !important;
-  border-color: #4da3ff !important;
+  background-color: #ff6eb4 !important;
+  border-color: #ff6eb4 !important;
   color: #ffffff !important;
 }
 
 .btn-primary:hover {
-  background-color: #79b8ff !important;
+  background-color: #ff9ed6 !important;
 }
 
 .btn-outline-dark {
-  color: #e5e7eb !important;
-  border-color: #374151 !important;
+  color: #f0d7e8 !important;
+  border-color: #6b2d5c !important;
 }
 
 .btn-outline-dark:hover {
-  background-color: #374151 !important;
+  background-color: #6b2d5c !important;
   color: #ffffff !important;
 }
 
@@ -157,18 +157,18 @@ a:hover {
 
 .form-control,
 .custom-select {
-  background-color: #0f172a !important;
-  border: 1px solid #374151 !important;
-  color: #e5e7eb !important;
+  background-color: #1f0f29 !important;
+  border: 1px solid #6b2d5c !important;
+  color: #f0d7e8 !important;
 }
 
 .form-control::placeholder {
-  color: #9ca3af !important;
+  color: #b388a6 !important;
 }
 
 .form-control:focus {
-  background-color: #0f172a !important;
-  border-color: #4da3ff !important;
+  background-color: #1f0f29 !important;
+  border-color: #ff6eb4 !important;
   box-shadow: none !important;
 }
 
@@ -177,17 +177,17 @@ a:hover {
    ========================================= */
 
 .table {
-  color: #e5e7eb !important;
+  color: #f0d7e8 !important;
 }
 
 .table th,
 .table td {
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 110, 180, 0.2) !important;
 }
 
 .table thead th {
-  background-color: #111827 !important;
-  color: #ffffff !important;
+  background-color: #2d1738 !important;
+  color: #ffc2e8 !important;
 }
 
 /* =========================================
@@ -195,19 +195,19 @@ a:hover {
    ========================================= */
 
 .page-link {
-  background-color: #111827 !important;
-  color: #cbd5e1 !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: #2d1738 !important;
+  color: #e8bfd9 !important;
+  border-color: rgba(255, 110, 180, 0.2) !important;
 }
 
 .page-link:hover {
-  background-color: rgba(77, 163, 255, 0.15) !important;
-  color: #ffffff !important;
+  background-color: rgba(255, 110, 180, 0.25) !important;
+  color: #ffc2e8 !important;
 }
 
 .page-item.active .page-link {
-  background-color: #4da3ff !important;
-  border-color: #4da3ff !important;
+  background-color: #ff6eb4 !important;
+  border-color: #ff6eb4 !important;
   color: #ffffff !important;
 }
 
@@ -216,9 +216,9 @@ a:hover {
    ========================================= */
 
 .alert {
-  background-color: #111827 !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  color: #e5e7eb !important;
+  background-color: #2d1738 !important;
+  border-color: rgba(255, 110, 180, 0.2) !important;
+  color: #f0d7e8 !important;
 }
 
 /* =========================================
@@ -226,9 +226,9 @@ a:hover {
    ========================================= */
 
 footer {
-  background-color: #0b0f19 !important;
-  color: #9ca3af !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #1a0d1f !important;
+  color: #b388a6 !important;
+  border-top: 1px solid rgba(255, 110, 180, 0.2);
 }
 /* =========================================
    BOOTSTRAP UTILITY OVERRIDES
@@ -237,20 +237,20 @@ footer {
 /* Background utilities */
 .bg-white,
 .bg-light {
-  background-color: #111827 !important;
+  background-color: #2d1738 !important;
 }
 
 .bg-dark {
-  background-color: #020617 !important;
+  background-color: #120a17 !important;
 }
 
 /* Text utilities */
 .text-dark {
-  color: #e5e7eb !important;
+  color: #f0d7e8 !important;
 }
 
 .text-muted {
-  color: #9ca3af !important;
+  color: #b388a6 !important;
 }
 
 /* Borders */
@@ -259,14 +259,14 @@ footer {
 .border-bottom,
 .border-left,
 .border-right {
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 110, 180, 0.2) !important;
 }
 
 /* Shadows */
 .shadow,
 .shadow-sm,
 .shadow-lg {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 4px 20px rgba(255, 110, 180, 0.2) !important;
 }
 
 /* =========================================
@@ -274,13 +274,13 @@ footer {
    ========================================= */
 
 .list-group-item {
-  background-color: #111827 !important;
-  color: #e5e7eb !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background-color: #2d1738 !important;
+  color: #f0d7e8 !important;
+  border-color: rgba(255, 110, 180, 0.2) !important;
 }
 
 .list-group-item-action:hover {
-  background-color: rgba(77, 163, 255, 0.15) !important;
+  background-color: rgba(255, 110, 180, 0.25) !important;
 }
 
 /* =========================================
@@ -288,16 +288,16 @@ footer {
    ========================================= */
 
 .badge {
-  background-color: #1f2933 !important;
-  color: #e5e7eb !important;
+  background-color: #3d2447 !important;
+  color: #f0d7e8 !important;
 }
 
 .badge-primary {
-  background-color: #4da3ff !important;
+  background-color: #ff6eb4 !important;
 }
 
 .badge-secondary {
-  background-color: #6b7280 !important;
+  background-color: #8b5a7d !important;
 }
 
 /* =========================================
@@ -309,11 +309,11 @@ footer {
 }
 
 .breadcrumb-item a {
-  color: #4da3ff !important;
+  color: #ff6eb4 !important;
 }
 
 .breadcrumb-item.active {
-  color: #9ca3af !important;
+  color: #b388a6 !important;
 }
 
 /* =========================================
@@ -321,18 +321,18 @@ footer {
    ========================================= */
 
 .modal-content {
-  background-color: #0f172a !important;
-  color: #e5e7eb !important;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: #1f0f29 !important;
+  color: #f0d7e8 !important;
+  border: 1px solid rgba(255, 110, 180, 0.2);
 }
 
 .modal-header,
 .modal-footer {
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 110, 180, 0.2) !important;
 }
 
 .close {
-  color: #e5e7eb !important;
+  color: #f0d7e8 !important;
   opacity: 1;
 }
 
@@ -341,17 +341,17 @@ footer {
    ========================================= */
 
 .nav-tabs {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 110, 180, 0.2);
 }
 
 .nav-tabs .nav-link {
-  color: #9ca3af !important;
+  color: #b388a6 !important;
 }
 
 .nav-tabs .nav-link.active {
-  background-color: #111827 !important;
-  color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.1);
+  background-color: #2d1738 !important;
+  color: #ffc2e8 !important;
+  border-color: rgba(255, 110, 180, 0.2);
 }
 
 /* =========================================
@@ -359,11 +359,11 @@ footer {
    ========================================= */
 
 .progress {
-  background-color: #020617 !important;
+  background-color: #120a17 !important;
 }
 
 .progress-bar {
-  background-color: #4da3ff !important;
+  background-color: #ff6eb4 !important;
 }
 
 /* =========================================
@@ -371,8 +371,8 @@ footer {
    ========================================= */
 
 .carousel-caption {
-  background: rgba(0, 0, 0, 0.6);
-  color: #ffffff;
+  background: rgba(45, 23, 56, 0.8);
+  color: #ffc2e8;
 }
 
 /* =========================================
@@ -380,11 +380,11 @@ footer {
    ========================================= */
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(255, 255, 255, 0.02) !important;
+  background-color: rgba(255, 110, 180, 0.05) !important;
 }
 
 .table-hover tbody tr:hover {
-  background-color: rgba(77, 163, 255, 0.1) !important;
+  background-color: rgba(255, 110, 180, 0.15) !important;
 }
 
 /* =========================================
@@ -392,7 +392,7 @@ footer {
    ========================================= */
 
 hr {
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 110, 180, 0.2) !important;
 }
 
 /* =========================================
@@ -403,7 +403,7 @@ img {
   filter: brightness(0.95) contrast(1.05);
 }
 /* =========================================
-   FORCE NAVBAR DROPDOWNS TO WORK (DARK MODE)
+   FORCE NAVBAR DROPDOWNS TO WORK (PINK VIBE)
    ========================================= */
 
 /* Ensure dropdown is above everything */
@@ -413,44 +413,44 @@ img {
 
 /* Fix background + border */
 .navbar .dropdown-menu {
-  background-color: #111827 !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background-color: #2d1738 !important;
+  border: 1px solid rgba(255, 110, 180, 0.3) !important;
   padding: 0.5rem 0;
 }
 
 /* Fix dropdown links */
 .navbar .dropdown-menu .dropdown-item {
-  color: #e5e7eb !important;
+  color: #f0d7e8 !important;
   padding: 0.5rem 1.25rem;
 }
 
 /* Hover / focus state */
 .navbar .dropdown-menu .dropdown-item:hover,
 .navbar .dropdown-menu .dropdown-item:focus {
-  background-color: rgba(77, 163, 255, 0.18) !important;
-  color: #ffffff !important;
+  background-color: rgba(255, 110, 180, 0.3) !important;
+  color: #ffc2e8 !important;
 }
 
 /* Active dropdown item */
 .navbar .dropdown-menu .dropdown-item.active {
-  background-color: #4da3ff !important;
+  background-color: #ff6eb4 !important;
   color: #ffffff !important;
 }
 
 /* Fix dropdown toggle arrow color */
 .navbar-light .navbar-nav .nav-link.dropdown-toggle {
-  color: #cbd5e1 !important;
+  color: #e8bfd9 !important;
 }
 
 /* Make caret visible */
 .dropdown-toggle::after {
-  border-top-color: #cbd5e1 !important;
+  border-top-color: #e8bfd9 !important;
 }
 
 /* Divider inside dropdown */
 .navbar .dropdown-divider,
 .navbar .dropdown-menu hr {
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 110, 180, 0.3) !important;
 }
 
 /* =========================
@@ -460,7 +460,7 @@ img {
 /* Mobile dropdown background */
 @media (max-width: 991px) {
   .navbar-collapse {
-    background-color: #0b0f19 !important;
+    background-color: #1a0d1f !important;
     padding: 1rem;
   }
 
@@ -474,25 +474,25 @@ img {
 
 /* Dropdown menu default background */
 .navbar-nav .dropdown-menu {
-  background-color: #ffffff; /* White background */
-  border: 1px solid #ddd; /* Light gray border */
+  background-color: #2d1738; /* Pink-tinted dark background */
+  border: 1px solid rgba(255, 110, 180, 0.3); /* Pink border */
   border-radius: 0.25rem;
   min-width: 180px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(255, 110, 180, 0.2);
   z-index: 1000;
 }
 
 /* Dropdown items default */
 .navbar-nav .dropdown-menu .dropdown-item {
-  color: #333; /* Dark text */
+  color: #e8bfd9; /* Light pink text */
   padding: 0.5rem 1rem;
   transition: background 0.3s ease, color 0.3s ease;
-  background-color: #0b0f19; /* Ensure white background by default */
+  background-color: #2d1738; /* Ensure pink-dark background by default */
 }
 
 /* Hover effect for dropdown items only */
 .navbar-nav .dropdown-menu .dropdown-item:hover {
-  background-color: #333; /* Dark blue background */
+  background-color: #ff6eb4; /* Pink background */
   color: #ffffff; /* White text */
 }
 
@@ -503,10 +503,10 @@ img {
 /* ===== User Profile Jumbotron ===== */
 
 .jumbotron {
-  background-color: #0b0f19; /* Light gray background */
+  background-color: #2d1738; /* Pink-tinted dark background */
   padding: 2rem 2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(255, 110, 180, 0.2);
   margin-bottom: 2rem;
   text-align: left;
 }
@@ -514,34 +514,34 @@ img {
 .jumbotron h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #1e3a8a; /* Dark blue title */
+  color: #ff6eb4; /* Pink title */
   margin-bottom: 0.5rem;
 }
 
 .jumbotron p {
   font-size: 1.1rem;
-  color: #555;
+  color: #e8bfd9;
   margin-bottom: 0.5rem;
 }
 
 .jumbotron .btn-primary {
-  background-color: #1e3a8a;
-  border-color: #1e3a8a;
+  background-color: #ff6eb4;
+  border-color: #ff6eb4;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .jumbotron .btn-primary:hover {
-  background-color: #0f1f5f;
-  border-color: #0f1f5f;
+  background-color: #ff9ed6;
+  border-color: #ff9ed6;
 }
 
 .jumbotron .btn-outline-primary {
-  border-color: #1e3a8a;
-  color: #1e3a8a;
+  border-color: #ff6eb4;
+  color: #ff6eb4;
   transition: all 0.3s ease;
 }
 
 .jumbotron .btn-outline-primary:hover {
-  background-color: #1e3a8a;
+  background-color: #ff6eb4;
   color: #fff;
 }
