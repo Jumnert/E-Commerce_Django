@@ -1,4 +1,4 @@
-# E-Commerce Django — Boutique / Jewelry Shop
+# E-Commerce Django — SkincareShop
 
 A Django-based e-commerce storefront built with Bootstrap and common JS plugins (Owl Carousel, Lightbox). This project includes a `store` app (products, cart, checkout), templates, static assets, and a small admin setup. It is ready for local development and deployment (Gunicorn + Whitenoise).
 
