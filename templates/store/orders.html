@@ -9,102 +9,416 @@
       <div class="card mb-4" id="tables">
         <div class="card-header text-center">Orders</div>
 
-        <div class="card-body">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Item</th>
-                <th>Image</th>
-                <th>Qty.</th>
-                <th>Ordered Date</th>
-                <th>Status</th>
-                <th>Receipt</th>
-              </tr>
-            </thead>
+        <div class="card-body p-0">
+          <!-- Desktop Table View -->
+          <div class="d-none d-lg-block">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Item</th>
+                  <th>Image</th>
+                  <th>Qty.</th>
+                  <th>Ordered Date</th>
+                  <th>Status</th>
+                  <th>Receipt</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {% if orders %} {% for order in orders %}
-              <tr>
-                <td>{{ forloop.counter }}</td>
+              <tbody>
+                {% if orders %} 
+                {% for order in orders %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ order.product.title }}</td>
+                  <td>
+                    {% if order.product.product_image %}
+                    <img
+                      src="{{ order.product.product_image.url }}"
+                      alt="{{ order.product.title }}"
+                      style="width: 100px"
+                    />
+                    {% endif %}
+                  </td>
+                  <td>{{ order.quantity }}</td>
+                  <td>{{ order.ordered_date|naturaltime }}</td>
+                  <td>
+                    {% if order.status == 'Pending' %}
+                    <span class="text-warning">Pending</span>
 
-                <td>{{ order.product.title }}</td>
+                    {% elif order.status == 'Accepted' %}
+                    <div class="bg-light border border-primary">
+                      <div class="p-3 bg-primary" style="width: 0%"></div>
+                    </div>
 
-                <td>
-                  {% if order.product.product_image %}
-                  <img
-                    src="{{ order.product.product_image.url }}"
-                    alt="{{ order.product.product_title }}"
-                    style="width: 150px"
-                  />
-                  {% endif %}
-                </td>
+                    {% elif order.status == 'Packed' %}
+                    <div class="bg-light border border-primary">
+                      <div class="p-3 bg-primary" style="width: 40%"></div>
+                    </div>
 
-                <td>{{ order.quantity }}</td>
+                    {% elif order.status == 'On The Way' %}
+                    <div class="bg-light border border-primary">
+                      <div class="p-3 bg-primary" style="width: 70%"></div>
+                    </div>
 
-                <td>{{ order.ordered_date|naturaltime }}</td>
+                    {% elif order.status == 'Delivered' %}
+                    <div class="bg-light border border-primary">
+                      <div class="p-3 bg-primary" style="width: 100%"></div>
+                    </div>
 
-                <!-- STATUS -->
-                <td>
+                    {% elif order.status == 'Cancelled' %}
+                    <div class="bg-light border border-danger">
+                      <div class="p-3 bg-danger" style="width: 100%"></div>
+                    </div>
+                    {% endif %}
+                    <div class="mt-1">{{ order.status }}</div>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-dark"
+                      data-order-id="{{ order.id }}"
+                      onclick="showReceipt(this.getAttribute('data-order-id'))"
+                    >
+                      🧾 View Receipt
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %} 
+                {% else %}
+                <tr>
+                  <td colspan="7" class="text-center text-muted">
+                    No orders found.
+                  </td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Mobile Card View -->
+          <div class="d-lg-none p-3">
+            {% if orders %} 
+            {% for order in orders %}
+            <div class="order-card mb-3">
+              <div class="order-card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="order-number">#{{ forloop.counter }}</span>
+                  <span class="order-date">{{ order.ordered_date|naturaltime }}</span>
+                </div>
+              </div>
+
+              <div class="order-card-body">
+                <div class="row align-items-center mb-3">
+                  <div class="col-4">
+                    {% if order.product.product_image %}
+                    <img
+                      src="{{ order.product.product_image.url }}"
+                      alt="{{ order.product.title }}"
+                      class="img-fluid rounded"
+                    />
+                    {% else %}
+                    <div class="no-image">No Image</div>
+                    {% endif %}
+                  </div>
+                  <div class="col-8">
+                    <h6 class="mb-1">{{ order.product.title }}</h6>
+                    <p class="text-muted mb-0">Qty: {{ order.quantity }}</p>
+                  </div>
+                </div>
+
+                <div class="status-section mb-3">
+                  <label class="status-label">Status:</label>
+                  
                   {% if order.status == 'Pending' %}
-                  <span class="text-warning">Pending</span>
+                  <span class="badge bg-warning text-dark">Pending</span>
 
                   {% elif order.status == 'Accepted' %}
-                  <div class="bg-light border border-primary">
-                    <div class="p-3 bg-primary" style="width: 0%"></div>
+                  <div class="progress mt-2" style="height: 25px;">
+                    <div class="progress-bar bg-primary" style="width: 0%">Accepted</div>
                   </div>
 
                   {% elif order.status == 'Packed' %}
-                  <div class="bg-light border border-primary">
-                    <div class="p-3 bg-primary" style="width: 40%"></div>
+                  <div class="progress mt-2" style="height: 25px;">
+                    <div class="progress-bar bg-primary" style="width: 40%">Packed</div>
                   </div>
 
                   {% elif order.status == 'On The Way' %}
-                  <div class="bg-light border border-primary">
-                    <div class="p-3 bg-primary" style="width: 70%"></div>
+                  <div class="progress mt-2" style="height: 25px;">
+                    <div class="progress-bar bg-primary" style="width: 70%">On The Way</div>
                   </div>
 
                   {% elif order.status == 'Delivered' %}
-                  <div class="bg-light border border-primary">
-                    <div class="p-3 bg-primary" style="width: 100%"></div>
+                  <div class="progress mt-2" style="height: 25px;">
+                    <div class="progress-bar bg-success" style="width: 100%">Delivered</div>
                   </div>
 
                   {% elif order.status == 'Cancelled' %}
-                  <div class="bg-light border border-danger">
-                    <div class="p-3 bg-danger" style="width: 100%"></div>
+                  <div class="progress mt-2" style="height: 25px;">
+                    <div class="progress-bar bg-danger" style="width: 100%">Cancelled</div>
                   </div>
                   {% endif %}
+                </div>
 
-                  <div class="mt-1">{{ order.status }}</div>
-                </td>
-
-                <!-- RECEIPT -->
-                <td>
-                  {% if order.status == 'Delivered' %}
-                  <a
-                    href="{% url 'store:order-receipt' order.id %}"
-                    class="btn btn-sm btn-outline-dark"
-                  >
-                    🧾 View Receipt
-                  </a>
-                  {% else %}
-                  <span class="text-muted">N/A</span>
-                  {% endif %}
-                </td>
-              </tr>
-              {% endfor %} {% else %}
-              <tr>
-                <td colspan="7" class="text-center text-muted">
-                  No orders found.
-                </td>
-              </tr>
-              {% endif %}
-            </tbody>
-          </table>
+                <button
+                  class="btn btn-outline-dark btn-sm w-100"
+                  data-order-id="{{ order.id }}"
+                  onclick="showReceipt(this.getAttribute('data-order-id'))"
+                >
+                  🧾 View Receipt
+                </button>
+              </div>
+            </div>
+            {% endfor %} 
+            {% else %}
+            <div class="text-center text-muted py-5">
+              No orders found.
+            </div>
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Receipt Modal -->
+<div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content" style="border: none; border-radius: 20px;">
+      <div class="modal-header" style="border: none; padding: 0;">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: 20px; top: 20px; z-index: 1050; background-color: white; border-radius: 50%; padding: 10px; opacity: 1;"></button>
+      </div>
+      <div class="modal-body" style="padding: 0;" id="receiptContent">
+        <!-- Receipt content will be loaded here -->
+        <div class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Modal Styles */
+  .modal-content {
+    overflow: hidden;
+  }
+  
+  #receiptContent .receipt-container {
+    box-shadow: none;
+    margin: 0;
+  }
+  
+  #receiptContent .action-buttons {
+    margin-bottom: 20px;
+  }
+
+  /* Mobile Order Card Styles */
+  .order-card {
+    border: 2px solid #2d1738;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #2d1738;
+    box-shadow: 0 4px 12px rgba(45, 23, 56, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(45, 23, 56, 0.6);
+  }
+
+  .order-card-header {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .order-number {
+    font-weight: 700;
+    color: white;
+    font-size: 1.1rem;
+  }
+
+  .order-date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .order-card-body {
+    padding: 15px;
+  }
+
+  .order-card-body h6 {
+    color: white;
+    font-weight: 600;
+  }
+
+  .order-card-body .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .no-image {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .status-label {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .status-section {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .status-section .badge {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .order-card-body .btn-outline-dark {
+    border-color: #E91E63;
+    color: #E91E63;
+    font-weight: 600;
+    background: rgba(233, 30, 99, 0.1);
+  }
+
+  .order-card-body .btn-outline-dark:hover {
+    background: #E91E63;
+    border-color: #E91E63;
+    color: white;
+  }
+
+  /* Responsive Modal */
+  @media (max-width: 768px) {
+    .modal-dialog {
+      margin: 0.5rem;
+      max-width: calc(100% - 1rem);
+    }
+
+    .modal-content {
+      border-radius: 15px;
+    }
+
+    #receiptContent .receipt-header h2 {
+      font-size: 1.5rem;
+    }
+
+    #receiptContent .receipt-icon {
+      font-size: 2rem;
+    }
+
+    #receiptContent .receipt-body {
+      padding: 20px;
+    }
+
+    #receiptContent .info-section {
+      padding: 15px;
+    }
+
+    #receiptContent .total-amount {
+      font-size: 1.5rem;
+    }
+
+    #receiptContent .btn-custom {
+      padding: 12px 20px;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .container {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .order-card-body img {
+      max-height: 100px;
+      object-fit: cover;
+    }
+
+    #receiptContent .item-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    #receiptContent .item-price {
+      align-self: flex-end;
+    }
+  }
+</style>
+
+<script>
+function showReceipt(orderId) {
+  console.log('Loading receipt for order ID:', orderId);
+  
+  const modal = new bootstrap.Modal(document.getElementById('receiptModal'));
+  const receiptContent = document.getElementById('receiptContent');
+  
+  // Show loading spinner
+  receiptContent.innerHTML = `
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-3 text-muted">Loading receipt for order #${orderId}...</p>
+    </div>
+  `;
+  
+  // Show modal
+  modal.show();
+  
+  // Build the URL dynamically
+  const receiptUrl = "{% url 'store:order-receipt' 999999 %}".replace('999999', orderId);
+  console.log('Fetching from URL:', receiptUrl);
+  
+  // Fetch receipt content
+  fetch(receiptUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(html => {
+      // Extract just the receipt container from the full HTML
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const receiptContainer = doc.querySelector('.receipt-container');
+      
+      if (receiptContainer) {
+        receiptContent.innerHTML = receiptContainer.outerHTML;
+      } else {
+        // If no container found, display the whole body content
+        const bodyContent = doc.querySelector('body');
+        receiptContent.innerHTML = bodyContent ? bodyContent.innerHTML : html;
+      }
+    })
+    .catch(error => {
+      console.error('Error loading receipt:', error);
+      receiptContent.innerHTML = `
+        <div class="alert alert-danger m-4" role="alert">
+          <i class="fas fa-exclamation-triangle"></i> 
+          <strong>Error loading receipt.</strong><br>
+          ${error.message}<br>
+          <small class="text-muted">Order ID: ${orderId}</small>
+        </div>
+      `;
+    });
+}
+</script>
 
 {% endblock content %}

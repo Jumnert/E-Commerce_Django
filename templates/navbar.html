@@ -10,7 +10,7 @@
                 <li class="nav-item">
                   <!-- Link--><a class="nav-link active" href="{% url 'store:home' %}">Home</a>
                 </li>
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories - Skintype</a>
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
                   <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown">
                     {% if categories_menu %}
                       {% for cat_menu in categories_menu %}
@@ -20,6 +20,9 @@
                     <hr>
                     <a class="dropdown-item border-0 transition-link" href="{% url 'store:all-categories' %}">All Categories</a>
                     
+                </li>
+                 <li class="nav-item">
+                  <!-- Link--><a class="nav-link active" href="{% url 'store:orders'  %}">History</a>
                 </li>
                 <!-- <li class="nav-item">
                 <a class="nav-link" href="{% url 'store:home' %}">Blog</a>
@@ -40,6 +43,7 @@
                     
                       <a class="dropdown-item border-0 transition-link" href="{% url 'store:profile' %}">Profile</a>
                       <a class="dropdown-item border-0 transition-link" href="{% url 'store:cart' %}">Cart</a>
+                      
                       <a class="dropdown-item border-0 transition-link" href="{% url 'store:orders' %}">Orders</a>
                     <hr>
                     <a class="dropdown-item border-0 transition-link" href="{% url 'store:login' %}">Log Out</a>

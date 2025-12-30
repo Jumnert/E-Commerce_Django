@@ -262,13 +262,23 @@ def remove_address(request, id):
     address.delete()
     messages.success(request, "Address removed successfully.")
     return redirect('store:profile')
+@login_required
 def order_receipt(request, order_id):
-    order = Order.objects.get(id=order_id)
+    order = get_object_or_404(Order, id=order_id, user=request.user)  # Added security check
+    
+    # Calculate the total for this order
+    total_price = order.quantity * order.product.price
+    
     order_items = [{
         'product': order.product,
         'quantity': order.quantity,
-        'total_price': order.total_amount
+        'total_price': total_price  # Fixed calculation
     }]
+    
+    # If Order model doesn't have total_amount field, calculate it
+    if not hasattr(order, 'total_amount'):
+        order.total_amount = total_price
+    
     return render(request, 'store/order_receipt.html', {
         'order': order,
         'order_items': order_items
