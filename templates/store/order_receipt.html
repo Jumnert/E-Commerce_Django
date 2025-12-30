@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Receipt</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: white;
+      min-height: 100vh;
+      padding: 40px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .receipt-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .receipt-header {
+      background: linear-gradient(135deg, #C2185B 0%, #E91E63 100%);
+      padding: 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .receipt-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .receipt-header h2 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    .receipt-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .receipt-body {
+      padding: 35px;
+    }
+
+    .info-section {
+      background: linear-gradient(135deg, #F8BBD0 0%, #FCE4EC 100%);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-left: 5px solid #C2185B;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px dashed #E0E0E0;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      color: #666;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .info-value {
+      color: #333;
+      font-weight: 500;
+    }
+
+    .items-section {
+      margin: 30px 0;
+    }
+
+    .section-title {
+      color: #C2185B;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(135deg, #C2185B 0%, #E91E63 100%);
+      border-radius: 2px;
+    }
+
+    .item-card {
+      background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD0 100%);
+      border: 2px solid #F48FB1;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .item-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(194, 24, 91, 0.2);
+    }
+
+    .item-details {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .item-quantity {
+      background: white;
+      color: #C2185B;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .item-name {
+      color: #333;
+      font-weight: 600;
+    }
+
+    .item-price {
+      color: #C2185B;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .total-section {
+      background: linear-gradient(135deg, #C2185B 0%, #E91E63 100%);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      color: white;
+      box-shadow: 0 10px 30px rgba(194, 24, 91, 0.3);
+    }
+
+    .total-label {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .total-amount {
+      font-size: 2rem;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .btn-custom {
+      padding: 14px 35px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+
+    .btn-print {
+      background: linear-gradient(135deg, #C2185B 0%, #E91E63 100%);
+      color: white;
+      box-shadow: 0 5px 15px rgba(194, 24, 91, 0.3);
+    }
+
+    .btn-print:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(194, 24, 91, 0.4);
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .receipt-container {
+        box-shadow: none;
+      }
+      .action-buttons {
+        display: none;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .receipt-body {
+        padding: 20px;
+      }
+      .action-buttons {
+        flex-direction: column;
+      }
+      .btn-custom {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="receipt-container">
+    <div class="receipt-header">
+      <div class="receipt-icon"><i class="fas fa-receipt"></i></div>
+      <h2>Order Receipt</h2>
+      <p style="margin: 10px 0 0 0; opacity: 0.9;">Thank you for your purchase!</p>
+    </div>
+
+    <div class="receipt-body">
+      <div class="info-section">
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-hashtag"></i> Order ID</span>
+          <span class="info-value">{{ order.id }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-user"></i> Customer</span>
+          <span class="info-value">{{ order.user.username }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-envelope"></i> Email</span>
+          <span class="info-value">{{ order.user.email }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-map-marker-alt"></i> Address</span>
+          <span class="info-value">{{ order.address.locality }}, {{ order.address.city }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fas fa-credit-card"></i> Payment Method</span>
+          <span class="info-value">{{ order.payment_method }}</span>
+        </div>
+      </div>
+
+      <div class="items-section">
+        <h5 class="section-title">Ordered Items</h5>
+        
+        {% for item in order_items %}
+        <div class="item-card">
+          <div class="item-details">
+            <span class="item-quantity">x{{ item.quantity }}</span>
+            <span class="item-name">{{ item.product.title }}</span>
+          </div>
+          <span class="item-price">${{ item.total_price }}</span>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="total-section">
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="total-label">Total Amount</span>
+          <span class="total-amount">${{ order.total_amount }}</span>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-custom btn-print" onclick="window.print()">
+          <i class="fas fa-print"></i>
+          <span>Print Receipt</span>
+        </button>
+        <button class="btn-custom btn-download" onclick="alert('Download feature coming soon!')">
+          <i class="fas fa-download"></i>
+          <span>Download PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

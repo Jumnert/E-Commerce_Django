@@ -262,3 +262,14 @@ def remove_address(request, id):
     address.delete()
     messages.success(request, "Address removed successfully.")
     return redirect('store:profile')
+def order_receipt(request, order_id):
+    order = Order.objects.get(id=order_id)
+    order_items = [{
+        'product': order.product,
+        'quantity': order.quantity,
+        'total_price': order.total_amount
+    }]
+    return render(request, 'store/order_receipt.html', {
+        'order': order,
+        'order_items': order_items
+    })

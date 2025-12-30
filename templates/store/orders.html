@@ -1,99 +1,110 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load humanize %}
+{% extends 'base.html' %} 
+{% load static %} 
+{% load humanize %} 
+{% block content%}
 
-    {% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card mb-4" id="tables">
+        <div class="card-header text-center">Orders</div>
 
-      <div class="container py-5">
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Image</th>
+                <th>Qty.</th>
+                <th>Ordered Date</th>
+                <th>Status</th>
+                <th>Receipt</th>
+              </tr>
+            </thead>
 
+            <tbody>
+              {% if orders %} {% for order in orders %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
 
-        <div class="row">
+                <td>{{ order.product.title }}</td>
 
-          
+                <td>
+                  {% if order.product.product_image %}
+                  <img
+                    src="{{ order.product.product_image.url }}"
+                    alt="{{ order.product.product_title }}"
+                    style="width: 150px"
+                  />
+                  {% endif %}
+                </td>
 
-          <div class="col-lg-12">
-            <div class="card mb-4" id="tables">
-              <div class="card-header text-center">Orders</div>
-              <div class="card-body">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Item</th>
-                      <th>Image</th>
-                      <th>Qty.</th>
-                      <th>Ordered Date</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <td>{{ order.quantity }}</td>
 
-                    {% if orders %}
+                <td>{{ order.ordered_date|naturaltime }}</td>
 
-                    {% for order in orders %}
-                    <tr>
-                      <td>{{forloop.counter}}</td>
-                      <td>{{order.product.title}}</td>
-                      <td>
-                        {% if order.product.product_image %}
-                          <img src="{{order.product.product_image.url}}" alt="{{order.product.product_ttile}}" style="width:150px;">
-                        {% endif %}
-                      </td>
-                      <td>{{order.quantity}}</td>
-                      <td>{{order.ordered_date|naturaltime}}</td>
-                      <td>
+                <!-- STATUS -->
+                <td>
+                  {% if order.status == 'Pending' %}
+                  <span class="text-warning">Pending</span>
 
-                        {% if order.status == 'Pending' %}
-                        
-                        {% endif %}
+                  {% elif order.status == 'Accepted' %}
+                  <div class="bg-light border border-primary">
+                    <div class="p-3 bg-primary" style="width: 0%"></div>
+                  </div>
 
-                        {% if order.status == 'Accepted' %}
-                        <div class="bg-light border border-primary">
-                            <div class="p-3 bg-primary" style="width:0;"></div>
-                        </div>
-                        {% endif %}
+                  {% elif order.status == 'Packed' %}
+                  <div class="bg-light border border-primary">
+                    <div class="p-3 bg-primary" style="width: 40%"></div>
+                  </div>
 
-                        {% if order.status == 'Packed' %}
-                        <div class="bg-light border border-primary">
-                            <div class="p-3 bg-primary" style="width:40%;"></div>
-                        </div>
-                        {% endif %}
-                        
-                        
-                        {% if order.status == 'On The Way' %}
-                        <div class="bg-light border border-primary">
-                            <div class="p-3 bg-primary" style="width:70%;"></div>
-                        </div>
-                        {% endif %}
-                        
-                        {% if order.status == 'Delivered' %}
-                        <div class="bg-light border border-primary">
-                            <div class="p-3 bg-primary" style="width:100%;"></div>
-                        </div>
-                        {% endif %}
+                  {% elif order.status == 'On The Way' %}
+                  <div class="bg-light border border-primary">
+                    <div class="p-3 bg-primary" style="width: 70%"></div>
+                  </div>
 
-                        {% if order.status == 'Cancelled' %}
-                        <div class="bg-light border border-danger">
-                            <div class="p-3 bg-danger" style="width:100%;"></div>
-                        </div>
-                        {% endif %}
-                        
-                        {{order.status}}
-                      </td>
-                    </tr>
-                    {% endfor %}
-                    {% endif %}
-                    
-                  </tbody>
-                </table>
-                
-              </div>
-            </div>
-          </div>
-          
+                  {% elif order.status == 'Delivered' %}
+                  <div class="bg-light border border-primary">
+                    <div class="p-3 bg-primary" style="width: 100%"></div>
+                  </div>
+
+                  {% elif order.status == 'Cancelled' %}
+                  <div class="bg-light border border-danger">
+                    <div class="p-3 bg-danger" style="width: 100%"></div>
+                  </div>
+                  {% endif %}
+
+                  <div class="mt-1">{{ order.status }}</div>
+                </td>
+
+                <!-- RECEIPT -->
+                <td>
+                  {% if order.status == 'Delivered' %}
+                  <a
+                    href="{% url 'store:order-receipt' order.id %}"
+                    class="btn btn-sm btn-outline-dark"
+                  >
+                    🧾 View Receipt
+                  </a>
+                  {% else %}
+                  <span class="text-muted">N/A</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %} {% else %}
+              <tr>
+                <td colspan="7" class="text-center text-muted">
+                  No orders found.
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
         </div>
-    
-        
-        
       </div>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
