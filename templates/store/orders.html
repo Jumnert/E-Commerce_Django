@@ -202,10 +202,50 @@
 
 <style>
   /* Modal Styles */
+  /* Receipt Button Styles - Make them bigger and add pink color */
+#receiptContent .btn-custom {
+  padding: 20px 50px !important;
+  border-radius: 15px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  font-size: 1.15rem !important;
+}
+
+#receiptContent .btn-print {
+  background: linear-gradient(135deg, #C2185B 0%, #E91E63 100%) !important;
+  color: white !important;
+  box-shadow: 0 5px 15px rgba(194, 24, 91, 0.3) !important;
+}
+
+#receiptContent .btn-print:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(194, 24, 91, 0.4) !important;
+}
+
+#receiptContent .btn-download {
+  background: linear-gradient(135deg, #C2185B 0%, #E91E63 100%) !important;
+  color: white !important;
+  box-shadow: 0 5px 15px rgba(194, 24, 91, 0.3) !important;
+}
+
+#receiptContent .btn-download:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(194, 24, 91, 0.4) !important;
+}
   .modal-content {
     overflow: hidden;
   }
   
+    .btn-download {
+      background: linear-gradient(135deg, #C2185B 0%, #E91E63 100%);
+      color: white;
+      box-shadow: 0 5px 15px rgba(194, 24, 91, 0.3);
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(194, 24, 91, 0.4);
+    }
   #receiptContent .receipt-container {
     box-shadow: none;
     margin: 0;
